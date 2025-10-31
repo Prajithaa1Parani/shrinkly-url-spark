@@ -11,7 +11,6 @@ interface LinkStats {
   totalClicks: number;
   countryCounts: Record<string, number>;
   referrerCounts: Record<string, number>;
-  recentClicks: any[];
 }
 
 const Stats = () => {
@@ -61,7 +60,6 @@ const Stats = () => {
           totalClicks: clicksData?.length || 0,
           countryCounts,
           referrerCounts,
-          recentClicks: clicksData?.slice(0, 20) || [],
         });
       } catch (error) {
         toast.error("Failed to load stats");
@@ -236,37 +234,6 @@ const Stats = () => {
             </CardContent>
           </Card>
         </div>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Recent Clicks</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              {stats.recentClicks.map((click) => (
-                <div
-                  key={click.id}
-                  className="flex items-center justify-between p-3 bg-muted/50 rounded-lg text-sm"
-                >
-                  <div className="flex items-center gap-4">
-                    <span className="text-muted-foreground">
-                      {new Date(click.timestamp).toLocaleString()}
-                    </span>
-                    <span className="font-medium">{click.country || "Unknown"}</span>
-                  </div>
-                  <span className="text-muted-foreground truncate max-w-[200px]">
-                    {click.referrer || "direct"}
-                  </span>
-                </div>
-              ))}
-              {stats.recentClicks.length === 0 && (
-                <div className="text-sm text-muted-foreground text-center py-8">
-                  No clicks yet
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </div>
   );
